@@ -7,31 +7,37 @@
     var htmlElement;
     var data;
     var options;
-    var chartHeight = 300;
-    var chartWidth = 300;
-
+    
     //seems to be called once (or after settings change)
     this.render = function (element) {
-      console.log('render');
-
-      //add external css
-      $(element).append('<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/jquery.jqplot.min.css" />');      
-
-      //add the chart div to the dom
-      var chartDiv = '<div id="' + currentSettings.id + '" style="height:' + currentSettings.chartHeight + 'px;width:' + currentSettings.chartWidth + 'px;"></div>';
+      console.log("render "+currentSettings.id);
+	   $(element).append('<link rel="stylesheet" href="plugins/thirdparty/jqplot/jquery.jqplot.css" />');
+	  var chartDiv = '<div id="' + currentSettings.id + '" style="height:' + currentSettings.chartHeight + 'px;width:' + currentSettings.chartWidth + 'px;"></div>';
       console.log(chartDiv);
       htmlElement = $(chartDiv);
-      $(element).append(htmlElement);
-    }
+	  //try{
+	  //var 
+	  //$(element).empty()
+	  $(element).replaceWith(htmlElement)
+	  //}
+	  //catch(e) {
+	  //console.log('repalce_with old_ele' + e)
+	  //$(element).append(htmlElement);
+	  //}
+	  }
+	
 
     this.onSettingsChanged = function (newSettings) {
+	  console.log("onSettingsChanged for " +currentSettings.id+": "+ newSettings.chartWidth + ' ' + newSettings.chartHeight)
       currentSettings = newSettings;
-    }
+	  this.render(document.getElementById(currentSettings.id))
+	}
 
     //seems to be called after render whenever a calculated value changes
     this.onCalculatedValueChanged = function (settingName, newValue) {
-      console.log('onCalculatedValueChanged for ' + settingName);
-
+      console.log("onCalculatedValueChanged for " +currentSettings.id +": "+ settingName);
+	  //console.log(currentSettings)
+	  //console.log(newValue)
       if (settingName == 'data')
         data = newValue;
         
@@ -39,9 +45,9 @@
         options = newValue;
 
       //render the chart
-      htmlElement.empty();
+	  htmlElement.empty();
       $.jqplot(currentSettings.id, data, options);
-    }
+   }
 
     this.onDispose = function () {
     }
@@ -50,7 +56,8 @@
       return Number(currentSettings.height);
     }
 
-    this.onSettingsChanged(settings);
+    //this.onSettingsChanged(settings);
+	//this.onCalculatedValueChanged("options",)
   };
 
   freeboard.loadWidgetPlugin({
@@ -58,12 +65,40 @@
     "display_name": "jqPlot",    
     "fill_size": true,
     "external_scripts": [
-      "http://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/jquery.jqplot.min.js",
-      "http://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.pieRenderer.min.js",
-      "http://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.barRenderer.min.js",
-      "http://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.categoryAxisRenderer.min.js",
-      "http://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.pointLabels.min.js"
-    ],    
+	  "plugins/thirdparty/jqplot/jquery.jqplot.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.barRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.BezierCurveRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.blockRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.bubbleRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.canvasAxisTickRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.canvasOverlay.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.canvasTextRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.categoryAxisRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.ciParser.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.cursor.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.dateAxisRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.donutRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.dragable.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.enhancedLegendRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.funnelRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.highlighter.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.json2.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.logAxisRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.mekkoAxisRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.mekkoRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.meterGaugeRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.mobile.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.ohlcRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.pieRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.pointLabels.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.pyramidAxisRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.pyramidGridRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.pyramidRenderer.js",
+	  "plugins/thirdparty/jqplot/plugins/jqplot.trendline.js",
+	  "plugins/thirdparty/jqplot/excanvas.js",
+	  "plugins/thirdparty/jqplot/jquery.jqplot.css"
+	],    
     "settings": [
       {
         "name": "id",
