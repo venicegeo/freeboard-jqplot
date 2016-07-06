@@ -11,9 +11,7 @@
     //seems to be called once (or after settings change)
     this.render = function (element) {
       console.log("render "+currentSettings.id);
-	  $(element).append('<link rel="stylesheet" href="plugins/thirdparty/jqplot/jquery.jqplot.css" />');
 	  var chartDiv = '<div id="' + currentSettings.id + '" style="height:' + currentSettings.chartHeight + 'px;width:' + currentSettings.chartWidth + 'px;"></div>';
-      console.log(chartDiv);
       htmlElement = $(chartDiv);
 	  $(element).replaceWith(htmlElement)
 	}
@@ -36,7 +34,10 @@
 
       htmlElement.empty();
       $.jqplot(currentSettings.id, data, options);
-   }
+	  var styleSheet = '<link rel="stylesheet" href="plugins/thirdparty/jqplot/jquery.jqplot.css" />';
+	  styleElement = $(styleSheet)
+      htmlElement.prepend(styleElement)
+	}
 
     this.onDispose = function () {
     }
