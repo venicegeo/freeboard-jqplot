@@ -247,7 +247,8 @@ div.jqplot-bubble-label {
 /*    background: rgba(90%, 90%, 90%, 0.15);*/
     padding-left: 2px;
     padding-right: 2px;
-    color: rgb(20%, 20%, 20%);
+    /*color: rgb(20%, 20%, 20%);*/
+	color: #00FF00;
 }
 
 div.jqplot-bubble-label.jqplot-bubble-label-highlight {
