@@ -10,23 +10,20 @@
     
     //seems to be called once (or after settings change)
     this.render = function (element) {
-      console.log("render "+currentSettings.id);
-	  var chartDiv = '<div id="' + currentSettings.id + '" style="height:' + currentSettings.chartHeight + 'px;width:' + currentSettings.chartWidth + 'px;"></div>';
+     var chartDiv = '<div id="' + currentSettings.id + '" style="height:' + currentSettings.chartHeight + 'px;width:' + currentSettings.chartWidth + 'px;"></div>';
       htmlElement = $(chartDiv);
 	  $(element).replaceWith(htmlElement)
 	}
 	
 
     this.onSettingsChanged = function (newSettings) {
-	  console.log("onSettingsChanged for " +currentSettings.id+": "+ newSettings.chartWidth + ' ' + newSettings.chartHeight)
-      currentSettings = newSettings;
+	   currentSettings = newSettings;
 	  this.render(document.getElementById(currentSettings.id))
 	}
 
     //seems to be called after render whenever a calculated value changes
     this.onCalculatedValueChanged = function (settingName, newValue) {
-      console.log("onCalculatedValueChanged for " +currentSettings.id +": "+ settingName);
-	  if (settingName == 'data')
+      if (settingName == 'data')
         data = newValue;
         
       if (settingName == 'options')
